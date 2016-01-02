@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "category".
@@ -11,6 +12,7 @@ use yii\db\ActiveRecord;
  * @property integer $id
  * @property string $title
  * @property string $description
+ *
  */
 class Category extends ActiveRecord
 {
@@ -28,6 +30,7 @@ class Category extends ActiveRecord
     public function rules()
     {
         return [
+            [['title'], 'required'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 255]
         ];
@@ -44,4 +47,26 @@ class Category extends ActiveRecord
             'description' => 'Description',
         ];
     }
+
+    /**
+     * @return String[]
+     */
+    public static function getNames()
+    {
+        return ArrayHelper::getColumn(self::find()->all(), 'title');
+    }
+
+    /**
+     * @param $categories_id
+     * @return Category[]
+     */
+    public static function getCategoriesById($categories_id) {
+        return self::find()->where(['id' => $categories_id])->all();
+    }
+
+    public function getPosts() {
+        $this->hasMany(Post::className(), ['id' => 'post_id'])
+            ->viaTable('category_post', ['category_id' => 'id']);
+    }
+
 }
