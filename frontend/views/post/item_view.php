@@ -12,6 +12,6 @@ use app\models\Post;
 ?>
 
 <div class="paragraph">
-    <h3><a href="index.php?r=post/view&id=<?= $model->id ?>"><?= $model->title ?></a></h3>
+    <h3><a href="/post/view?id=<?= $model->id ?>"><?= $model->title ?></a></h3>
     <p><?= $model->body ?></p>
 </div>
