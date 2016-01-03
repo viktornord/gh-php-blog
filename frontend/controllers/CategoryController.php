@@ -50,8 +50,13 @@ class CategoryController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'postsProvider' => new ActiveDataProvider([
+                'query' => Post::find()->where(['id' => ArrayHelper::getColumn($model->posts, 'id')])
+            ])
         ]);
     }
 

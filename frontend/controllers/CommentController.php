@@ -1,7 +1,8 @@
 <?php
 
-namespace app\controllers;
+namespace frontend\controllers;
 
+use app\models\Post;
 use Yii;
 use app\models\Comment;
 use yii\data\ActiveDataProvider;
@@ -62,11 +63,15 @@ class CommentController extends Controller
     {
         $model = new Comment();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->author_id = Yii::$app->user->id;
+        }
+
+        if ($model->save()) {
+            return $this->redirect(['../post/view', 'id' => $model->post_id]);
         } else {
-            return $this->render('create', [
-                'model' => $model,
+            return $this->render('../post/view', [
+                'model' => Post::findOne($model->post_id),
             ]);
         }
     }

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0aa294e2feef9fa53bfce452bd2104fc",
-    "content-hash": "0b67a9843837abebdc153409664e69a1",
+    "hash": "31e6bf3285613af8739b4bb8d6dc737b",
+    "content-hash": "9090780f997f0cd95744c5be70327625",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -369,12 +369,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
-                "reference": "f8475c5b895726e082a1614993c1aff64f77e367"
+                "reference": "65b5776017a620c7220af8f444d1bacc7a958be1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/f8475c5b895726e082a1614993c1aff64f77e367",
-                "reference": "f8475c5b895726e082a1614993c1aff64f77e367",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/65b5776017a620c7220af8f444d1bacc7a958be1",
+                "reference": "65b5776017a620c7220af8f444d1bacc7a958be1",
                 "shasum": ""
             },
             "require": {
@@ -409,7 +409,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-12-22 17:42:57"
+            "time": "2016-01-03 13:07:06"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -463,6 +463,50 @@
                 "mailer"
             ],
             "time": "2015-06-06 14:19:39"
+        },
+        {
+            "name": "yiidoc/yii2-redactor",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiidoc/yii2-redactor.git",
+                "reference": "c4c80c19c68728e88d135f4eec5c51352fbbaa37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiidoc/yii2-redactor/zipball/c4c80c19c68728e88d135f4eec5c51352fbbaa37",
+                "reference": "c4c80c19c68728e88d135f4eec5c51352fbbaa37",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "yii\\redactor\\": "/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nghia Nguyen",
+                    "email": "zinzinday@gmail.com"
+                }
+            ],
+            "description": "Extension redactor for Yii2 Framework.",
+            "keywords": [
+                "Redactor",
+                "extension",
+                "html editor",
+                "imperavi",
+                "wysiwyg",
+                "yii2"
+            ],
+            "time": "2015-06-02 21:47:24"
         },
         {
             "name": "yiisoft/yii2",

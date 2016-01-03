@@ -12,6 +12,7 @@ use yii\helpers\ArrayHelper;
  * @property integer $id
  * @property string $title
  * @property string $description
+ * @property mixed posts
  *
  */
 class Category extends ActiveRecord
@@ -65,8 +66,7 @@ class Category extends ActiveRecord
     }
 
     public function getPosts() {
-        $this->hasMany(Post::className(), ['id' => 'post_id'])
+        return $this->hasMany(Post::className(), ['id' => 'post_id'])
             ->viaTable('category_post', ['category_id' => 'id']);
     }
-
 }

@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
         'itemView' => function($model) {
-            return $this->render('item_view', [
+            return $this->render('category_row', [
                 'model' => $model,
             ]);
         }

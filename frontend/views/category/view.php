@@ -1,16 +1,19 @@
 <?php
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Category */
+/* @var $postsProvider app\models\Category */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="category-view">
+<div id="content" class="category-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -25,13 +28,15 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'title',
-            'description:ntext',
-        ],
-    ]) ?>
+
+    <?= ListView::widget([
+        'dataProvider' => $postsProvider,
+        'itemView' => function($post) {
+            return $this->render('post_row', [
+                'model' => $post,
+                'categoryNames' => ArrayHelper::getColumn($post->categories, 'title')
+            ]);
+        }
+    ]); ?>
 
 </div>
