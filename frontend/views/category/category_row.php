@@ -12,6 +12,6 @@ use app\models\Category;
 ?>
 
 <div class="paragraph">
-    <h3><a href="category/view?id=<?= $model->id ?>"><?= $model->title ?></a></h3>
+    <h3><a href="/category/view?id=<?= $model->id ?>"><?= $model->title ?></a></h3>
     <p><?= $model->description ?></p>
 </div>

@@ -3,6 +3,8 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use app\models\Category;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -39,8 +41,14 @@ AppAsset::register($this);
         ['label' => 'About', 'url' => ['/site/about']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
         ['label' => 'Posts', 'url' => ['/post']],
-        ['label' => 'Categories', 'url' => ['/category']],
     ];
+    $categories = Category::find()->select(['title', 'id'])->all();
+    $categoryMenu = [];
+    /** @var Category $category*/
+    foreach($categories as $category) {
+        $categoryMenu[] = ['label' => $category->title, 'url' => ['/category/view?id='.$category->id]];
+    }
+    $menuItems[] = ['label' => 'Categories', 'items' => $categoryMenu];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
