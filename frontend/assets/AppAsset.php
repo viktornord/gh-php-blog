@@ -18,12 +18,9 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-//        'css/materialize.css',
-        'css/prism.css',
+        'css/site.css',
     ];
     public $js = [
-//        'js/materialize.js',
-        'js/prism.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

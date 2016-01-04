@@ -30,16 +30,16 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'Home', 'url' => ['/post']],
+//        ['label' => 'About', 'url' => ['/site/about']],
+//        ['label' => 'Contact', 'url' => ['/site/contact']],
         ['label' => 'Posts', 'url' => ['/post']],
     ];
     $categories = Category::find()->select(['title', 'id'])->all();

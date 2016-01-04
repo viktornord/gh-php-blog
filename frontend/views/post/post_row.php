@@ -14,4 +14,9 @@ use app\models\Post;
 <div class="paragraph">
     <h3><a href="/post/view?id=<?= $model->id ?>"><?= $model->title ?></a></h3>
     <p><?= $model->body ?></p>
+    <?php if (!empty($categoryNames)):?>
+        <p><b>Categories</b>: <?= implode(', ', $categoryNames) ?></p>
+    <?php else: ?>
+        <p><b>Uncategorized</b></p>
+    <?php endif?>
 </div>

@@ -35,7 +35,7 @@ class PostController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Post::find(),
+            'query' => Post::find()->where(['active' => true]),
         ]);
 
         return $this->render('index', [
@@ -109,8 +109,8 @@ class PostController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->unlinkAll('categories', true);
-        $model->delete();
+        $model->active = false;
+        $model->save();
 
         return $this->redirect(['index']);
     }
@@ -124,7 +124,7 @@ class PostController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Post::findOne($id)) !== null) {
+        if (($model = Post::findOne(['id' => $id, 'active' => true])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

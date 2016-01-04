@@ -1,7 +1,7 @@
 <?php
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\grid\GridView;
 use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
@@ -20,9 +20,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
-        'itemView' => function($model) {
+        'itemView' => function($post) {
             return $this->render('post_row', [
-                'model' => $model,
+                'model' => $post,
+                'categoryNames' => ArrayHelper::getColumn($post->categories, 'title')
             ]);
         }
     ]); ?>
