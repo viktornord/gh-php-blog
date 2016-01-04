@@ -43,7 +43,7 @@ AppAsset::register($this);
         ['label' => 'Posts', 'url' => ['/post']],
     ];
     $categories = Category::find()->select(['title', 'id'])->all();
-    $categoryMenu = [];
+    $categoryMenu = [['label' => 'All categories', 'url' => ['/category']]];
     /** @var Category $category*/
     foreach($categories as $category) {
         $categoryMenu[] = ['label' => $category->title, 'url' => ['/category/view?id='.$category->id]];

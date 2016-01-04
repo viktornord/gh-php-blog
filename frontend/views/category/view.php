@@ -16,9 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div id="content" class="category-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
+        <?php if(Yii::$app->user->can('updateCategory')): ?>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php endif ?>
+        <?php if(Yii::$app->user->can('deleteCategory')): ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -26,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?php endif ?>
     </p>
 
 

@@ -6,6 +6,7 @@ use common\models\Category;
 use Yii;
 use common\models\Post;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -19,6 +20,17 @@ class PostController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create', 'update', 'delete'],
+                'rules' => [
+                   [
+                       'actions' => ['create', 'update', 'delete'],
+                       'allow' => true,
+                       'roles' => ['admin']
+                   ]
+                ]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

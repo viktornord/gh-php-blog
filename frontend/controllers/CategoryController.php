@@ -6,6 +6,7 @@ use common\models\Post;
 use Yii;
 use common\models\Category;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -19,6 +20,17 @@ class CategoryController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['delete', 'create', 'update'],
+                'rules' => [
+                    [
+                        'actions' => ['delete', 'create', 'update'],
+                        'allow' => true,
+                        'roles' => ['admin']
+                    ]
+                ]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -35,7 +47,7 @@ class CategoryController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Category::find(),
+            'query' => Category::find()->where(['active' => true]),
         ]);
 
         return $this->render('index', [
@@ -105,7 +117,9 @@ class CategoryController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->active = false;
+        $model->save();
 
         return $this->redirect(['index']);
     }
@@ -119,7 +133,7 @@ class CategoryController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Category::findOne($id)) !== null) {
+        if (($model = Category::findOne(['id' => $id, 'active' => true])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

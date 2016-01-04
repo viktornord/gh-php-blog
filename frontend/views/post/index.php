@@ -13,10 +13,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div id="content" class="post-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <?php if(Yii::$app->user->can('createPost')): ?>
     <p>
         <?= Html::a('Create Post', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    <?php endif ?>
 
     <?= ListView::widget([
         'dataProvider' => $dataProvider,

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "post".
@@ -15,7 +16,7 @@ use Yii;
  *
  * @property Comment[] $comments
  */
-class Post extends \yii\db\ActiveRecord
+class Post extends ActiveRecord
 {
 
     public $categories_id;
@@ -36,7 +37,8 @@ class Post extends \yii\db\ActiveRecord
             [['title', 'body'], 'required'],
             [['body'], 'string'],
             [['date_added'], 'safe'],
-            [['title'], 'string', 'max' => 255]
+            [['title'], 'string', 'max' => 255],
+            [['categories_id'], 'safe']
         ];
     }
 

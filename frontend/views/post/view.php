@@ -17,7 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div id="content" class="post-view">
 
     <p>
+        <?php if(Yii::$app->user->can('updatePost')): ?>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php endif ?>
+        <?php if(Yii::$app->user->can('deletePost')): ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -25,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?php endif ?>
     </p>
     <h2><?= Html::encode($model->title) ?></h2>
     <p><?= $model->body ?></p>

@@ -13,6 +13,7 @@ use yii\helpers\ArrayHelper;
  * @property string $title
  * @property string $description
  * @property mixed posts
+ * @property integer $active
  *
  */
 class Category extends ActiveRecord

@@ -14,9 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <?php if(Yii::$app->user->can('createCategory')): ?>
     <p>
         <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    <?php endif ?>
 
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
