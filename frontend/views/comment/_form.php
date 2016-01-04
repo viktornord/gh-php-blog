@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 
     <?= Html::activeHiddenInput($model, 'post_id') ?>
 
-    <?= $form->field($model, 'body')->widget(Redactor::className()) ?>
+    <?= $form->field($model, 'body')->widget(Redactor::className())->label(false) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

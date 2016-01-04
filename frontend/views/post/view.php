@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <h2><?= Html::encode($model->title) ?></h2>
     <p><?= $model->body ?></p>
-    <h5>Comments</h5>
+    <h4><b>Comments</b></h4>
     <?= ListView::widget([
         'dataProvider' => new ActiveDataProvider([
             'query' => Comment::find()->where(['post_id' => $model->id]),
@@ -38,10 +38,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $comment,
                 'userName' => User::findOne($comment->author_id)->username
             ]);
-        }
+        },
+        'emptyText' => 'No comments yet'
     ]); ?>
     <?php if(!Yii::$app->user->isGuest): ?>
-        <h5>Leave your comment</h5>
+        <h5><b>Leave your comment</b></h5>
         <?php
             $comment = new Comment();
             $comment->post_id = $model->id;
