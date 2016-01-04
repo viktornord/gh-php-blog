@@ -5,7 +5,7 @@
  * Date: 02/01/16
  * Time: 18:16
  */
-use app\models\Category;
+use common\models\Category;
 
 /** @var $model Category */
 

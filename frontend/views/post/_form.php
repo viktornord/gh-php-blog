@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Category;
+use common\models\Category;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -8,7 +8,7 @@ use yii\redactor\widgets\Redactor;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Post */
+/* @var $model common\models\Post */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $category_names String[] */
 ?>

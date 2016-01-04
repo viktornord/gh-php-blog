@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
@@ -17,6 +17,8 @@ use Yii;
  */
 class Post extends \yii\db\ActiveRecord
 {
+
+    public $categories_id;
     /**
      * @inheritdoc
      */

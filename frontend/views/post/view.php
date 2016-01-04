@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Comment;
+use common\models\Comment;
 use common\models\User;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Post */
+/* @var $model common\models\Post */
 
 $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Posts', 'url' => ['index']];

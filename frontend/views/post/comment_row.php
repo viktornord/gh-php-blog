@@ -5,7 +5,7 @@
  * Date: 02/01/16
  * Time: 18:16
  */
-use app\models\Comment;
+use common\models\Comment;
 
 /** @var $model Comment */
 /** @var String $userName */

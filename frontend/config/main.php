@@ -12,7 +12,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
-    'defaultRoute' => 'post',
+//    'defaultRoute' => 'post',
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',

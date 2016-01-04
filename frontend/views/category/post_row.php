@@ -5,7 +5,7 @@
  * Date: 02/01/16
  * Time: 18:16
  */
-use app\models\Post;
+use common\models\Post;
 
 /** @var $model Post */
 /** @var $categoryNames String[] */

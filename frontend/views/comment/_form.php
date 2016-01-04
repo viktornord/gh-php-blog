@@ -5,7 +5,7 @@ use yii\redactor\widgets\Redactor;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Comment */
+/* @var $model common\models\Comment */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 

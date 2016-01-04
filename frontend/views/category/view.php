@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Category */
-/* @var $postsProvider app\models\Category */
+/* @var $model common\models\Category */
+/* @var $postsProvider common\models\Category */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];

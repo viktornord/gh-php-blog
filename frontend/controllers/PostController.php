@@ -2,9 +2,9 @@
 
 namespace frontend\controllers;
 
-use app\models\Category;
+use common\models\Category;
 use Yii;
-use app\models\Post;
+use common\models\Post;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;

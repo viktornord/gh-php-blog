@@ -2,9 +2,9 @@
 
 namespace frontend\controllers;
 
-use app\models\Post;
+use common\models\Post;
 use Yii;
-use app\models\Comment;
+use common\models\Comment;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
