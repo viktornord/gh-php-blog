@@ -119,6 +119,11 @@ class CategoryController extends Controller
     {
         $model = $this->findModel($id);
         $model->active = false;
+        /** @var Post $post*/
+        foreach($model->posts as $post) {
+            $post->active = false;
+            $post->save();
+        }
         $model->save();
 
         return $this->redirect(['index']);
