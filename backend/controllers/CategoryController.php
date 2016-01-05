@@ -79,9 +79,11 @@ class CategoryController extends Controller
         if ($model) {
             $model->active = !$model->active;
             /** @var Post $post */
-            foreach($model->getPostsOfThisCategoryOnly() as $post) {
-                $post->active = $model->active;
-                $post->save();
+            if (!$model->active) {
+                foreach($model->getPostsOfThisCategoryOnly() as $post) {
+                    $post->active = false;
+                    $post->save();
+                }
             }
             $model->save();
         }

@@ -86,9 +86,11 @@ class PostController extends Controller
         if ($model) {
             $model->active = !$model->active;
             /** @var Category $category */
-            foreach($model->categories as $category) {
-                if (!$category->active) {
-                    $category->unlink('posts', $model, true);
+            if ($model->active) {
+                foreach($model->categories as $category) {
+                    if (!$category->active) {
+                        $category->unlink('posts', $model, true);
+                    }
                 }
             }
             $model->save();
