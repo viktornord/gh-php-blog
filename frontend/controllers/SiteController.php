@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\User;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
@@ -12,6 +13,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
@@ -87,7 +89,14 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        $model->load(Yii::$app->request->post());
+        /** @var User $user*/
+        $user = User::findOne(['username' => $model->username]);
+        if ($user && !$user->activated) {
+            return $this->render('confirmPending');
+        }
+        if ($user && $model->login()) {
+
             return $this->goBack();
         } else {
             return $this->render('login', [
@@ -151,15 +160,35 @@ class SiteController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
+                return $this->render('confirmPending');
             }
         }
 
         return $this->render('signup', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Activates user after signing up.
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionConfirm()
+    {
+        /** @var User $user */
+        $user = User::findOne([
+            'confirm_key' => Yii::$app->request->getQueryParam('key'),
+            'activated' => false
+        ]);
+
+        if ($user) {
+            $user->activated = true;
+            $user->save();
+            return $this->render('confirmSuccess');
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**

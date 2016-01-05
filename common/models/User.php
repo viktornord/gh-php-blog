@@ -20,6 +20,8 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property boolean $activated
+ * @property string $confirm_key
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -60,7 +62,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE, 'activated' => true]);
     }
 
     /**
@@ -79,7 +81,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE, 'activated' => true]);
     }
 
     /**
@@ -97,6 +99,7 @@ class User extends ActiveRecord implements IdentityInterface
         return static::findOne([
             'password_reset_token' => $token,
             'status' => self::STATUS_ACTIVE,
+            'activated' => true
         ]);
     }
 
@@ -184,5 +187,19 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public function sendEmailConfirmation()
+    {
+        $this->confirm_key = Yii::$app->security->generateRandomString() . '_' . time();
+
+        Yii::$app->mailer
+            ->compose('confirm', [
+                'confirmationKey' => $this->confirm_key
+            ])
+            ->setFrom('vik@vik.com')
+            ->setTo($this->email)
+            ->setSubject('Please confirm your email address' )
+            ->send();
     }
 }
