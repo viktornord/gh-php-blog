@@ -8,11 +8,9 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
-    'name' => 'Viktor\'s Blog',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
-//    'defaultRoute' => 'post',
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',

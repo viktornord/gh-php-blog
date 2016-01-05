@@ -3,11 +3,13 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use backend\assets\AppAsset;
+use common\models\Category;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
 AppAsset::register($this);
@@ -28,16 +30,27 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'Home', 'url' => ['/site']],
+//        ['label' => 'About', 'url' => ['/site/about']],
+        ['label' => 'Comments', 'url' => ['/comment']],
+        ['label' => 'Posts', 'url' => ['/post']],
     ];
+    $categories = Category::find()->select(['title', 'id'])->all();
+    $categoryMenu = [['label' => 'All categories', 'url' => ['/category']]];
+    /** @var Category $category*/
+    foreach($categories as $category) {
+        $categoryMenu[] = ['label' => $category->title, 'url' => ['/category/view?id='.$category->id]];
+    }
+    $menuItems[] = ['label' => 'Categories', 'items' => $categoryMenu];
     if (Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = [
