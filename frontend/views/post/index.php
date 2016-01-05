@@ -22,9 +22,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
         'itemView' => function($post) {
+            $categoryNames = [];
+            foreach($post->categories as $category) {
+                if ($category->active) {
+                    $categoryNames[] = $category->title;
+                }
+            }
             return $this->render('post_row', [
                 'model' => $post,
-                'categoryNames' => ArrayHelper::getColumn($post->categories, 'title')
+                'categoryNames' => $categoryNames
             ]);
         }
     ]); ?>

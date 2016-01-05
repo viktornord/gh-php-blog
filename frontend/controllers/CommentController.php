@@ -66,7 +66,7 @@ class CommentController extends Controller
         if (Yii::$app->request->isGet) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-
+        $model->author_id = Yii::$app->user->id;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['../post/view', 'id' => $model->post_id]);
         } else {

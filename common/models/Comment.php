@@ -35,7 +35,7 @@ class Comment extends ActiveRecord
         return [
             [['post_id', 'author_id', 'body'], 'required'],
             [['post_id', 'author_id'], 'integer'],
-            [['date_added'], 'safe'],
+            [['date_added', 'post_id'], 'safe'],
             [['body'], 'string']
         ];
     }

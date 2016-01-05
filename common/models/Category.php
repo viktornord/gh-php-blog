@@ -63,11 +63,24 @@ class Category extends ActiveRecord
      * @return Category[]
      */
     public static function getCategoriesById($categories_id) {
-        return self::find()->where(['id' => $categories_id])->all();
+        return self::find()->where(['id' => $categories_id, 'active' => true])->all();
     }
 
     public function getPosts() {
         return $this->hasMany(Post::className(), ['id' => 'post_id'])
             ->viaTable('category_post', ['category_id' => 'id']);
+    }
+
+
+    public function getPostsOfThisCategoryOnly()
+    {
+        $posts = [];
+        foreach($this->posts as $post) {
+            $categories = $post->categories;
+            if (count($categories) === 1 && $categories[0]->id === $this->id) {
+                $posts[] = $post;
+            }
+        }
+        return $posts;
     }
 }

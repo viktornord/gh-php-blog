@@ -120,7 +120,8 @@ class CategoryController extends Controller
         $model = $this->findModel($id);
         $model->active = false;
         /** @var Post $post*/
-        foreach($model->posts as $post) {
+        ;
+        foreach($model->getPostsOfThisCategoryOnly() as $post) {
             $post->active = false;
             $post->save();
         }

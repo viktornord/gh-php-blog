@@ -1,36 +1,22 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
-use common\models\Category;
 use Yii;
-use common\models\Post;
+use common\models\Comment;
 use yii\data\ActiveDataProvider;
-use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PostController implements the CRUD actions for Post model.
+ * CommentController implements the CRUD actions for Comment model.
  */
-class PostController extends Controller
+class CommentController extends Controller
 {
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['create', 'update', 'delete'],
-                'rules' => [
-                   [
-                       'actions' => ['create', 'update', 'delete'],
-                       'allow' => true,
-                       'roles' => ['admin']
-                   ]
-                ]
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -41,13 +27,13 @@ class PostController extends Controller
     }
 
     /**
-     * Lists all Post models.
+     * Lists all Comment models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Post::find()->where(['active' => true]),
+            'query' => Comment::find(),
         ]);
 
         return $this->render('index', [
@@ -56,7 +42,7 @@ class PostController extends Controller
     }
 
     /**
-     * Displays a single Post model.
+     * Displays a single Comment model.
      * @param integer $id
      * @return mixed
      */
@@ -68,50 +54,36 @@ class PostController extends Controller
     }
 
     /**
-     * Creates a new Post model.
+     * Creates a new Comment model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Post();
+        $model = new Comment();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            foreach(Category::getCategoriesById($model->categories_id) as $category) {
-                $model->link('categories', $category);
-            }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                'model' => $model
+                'model' => $model,
             ]);
         }
     }
 
     /**
-     * Updates an existing Post model.
+     * Updates an existing Comment model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
-        /** @var Post $model */
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->unlinkAll('categories', true);
-            foreach(Category::getCategoriesById($model->categories_id) as $category) {
-                $model->link('categories', $category);
-            }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            /** @var Category $category */
-            foreach($model->categories as $category) {
-                if ($category->active) {
-                    $model->categories_id[] = $category->id;
-                }
-            }
             return $this->render('update', [
                 'model' => $model,
             ]);
@@ -119,30 +91,28 @@ class PostController extends Controller
     }
 
     /**
-     * Deletes an existing Post model.
+     * Deletes an existing Comment model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        $model->active = false;
-        $model->save();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Post model based on its primary key value.
+     * Finds the Comment model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Post the loaded model
+     * @return Comment the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Post::findOne(['id' => $id, 'active' => true])) !== null) {
+        if (($model = Comment::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -21,10 +21,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?php endif ?>
         <?php if(Yii::$app->user->can('deleteCategory')): ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Deactivate', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Are you sure you want to deactivate this item?',
                 'method' => 'post',
             ],
         ]) ?>

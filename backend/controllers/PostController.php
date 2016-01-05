@@ -1,12 +1,11 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
 use common\models\Category;
 use Yii;
 use common\models\Post;
 use yii\data\ActiveDataProvider;
-use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -20,17 +19,6 @@ class PostController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['create', 'update', 'delete'],
-                'rules' => [
-                   [
-                       'actions' => ['create', 'update', 'delete'],
-                       'allow' => true,
-                       'roles' => ['admin']
-                   ]
-                ]
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -47,7 +35,7 @@ class PostController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Post::find()->where(['active' => true]),
+            'query' => Post::find(),
         ]);
 
         return $this->render('index', [
@@ -68,27 +56,6 @@ class PostController extends Controller
     }
 
     /**
-     * Creates a new Post model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Post();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            foreach(Category::getCategoriesById($model->categories_id) as $category) {
-                $model->link('categories', $category);
-            }
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model
-            ]);
-        }
-    }
-
-    /**
      * Updates an existing Post model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -96,7 +63,6 @@ class PostController extends Controller
      */
     public function actionUpdate($id)
     {
-        /** @var Post $model */
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -106,16 +72,27 @@ class PostController extends Controller
             }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            /** @var Category $category */
-            foreach($model->categories as $category) {
-                if ($category->active) {
-                    $model->categories_id[] = $category->id;
-                }
-            }
+            $model->categories_id = ArrayHelper::getColumn($model->categories, 'id');
             return $this->render('update', [
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionSetactivity($id)
+    {
+        $model = $this->findModel($id);
+        if ($model) {
+            $model->active = !$model->active;
+            /** @var Category $category */
+            foreach($model->categories as $category) {
+                if (!$category->active) {
+                    $category->unlink('posts', $model, true);
+                }
+            }
+            $model->save();
+        }
+        return $this->redirect('index');
     }
 
     /**
@@ -127,8 +104,11 @@ class PostController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->active = false;
-        $model->save();
+        foreach($model->comments as $comment) {
+            $comment->delete();
+        }
+        $model->unlinkAll('categories', true);
+        $model->delete();
 
         return $this->redirect(['index']);
     }
@@ -142,7 +122,7 @@ class PostController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Post::findOne(['id' => $id, 'active' => true])) !== null) {
+        if (($model = Post::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

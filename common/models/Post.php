@@ -15,6 +15,7 @@ use yii\db\ActiveRecord;
  * @property integer $active
  *
  * @property Comment[] $comments
+ * @property Comment[] $categories
  */
 class Post extends ActiveRecord
 {
