@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Category;
+use common\models\Comment;
 use Yii;
 use common\models\Post;
 use yii\data\ActiveDataProvider;
@@ -104,9 +105,7 @@ class PostController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        foreach($model->comments as $comment) {
-            $comment->delete();
-        }
+        Comment::deleteAll(['post_id' => $id]);
         $model->unlinkAll('categories', true);
         $model->delete();
 
