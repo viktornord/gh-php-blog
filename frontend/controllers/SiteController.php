@@ -3,7 +3,7 @@ namespace frontend\controllers;
 
 use common\models\User;
 use Yii;
-use common\models\LoginForm;
+use frontend\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;

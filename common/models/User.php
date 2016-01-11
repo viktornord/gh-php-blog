@@ -5,6 +5,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\rbac\Role;
 use yii\web\IdentityInterface;
 
 /**
@@ -201,5 +202,13 @@ class User extends ActiveRecord implements IdentityInterface
             ->setTo($this->email)
             ->setSubject('Please confirm your email address' )
             ->send();
+    }
+
+    /**
+     * @param $userId
+     * @return Role[]
+     */
+    public static function getRole($userId) {
+        return Yii::$app->authManager->getRolesByUser($userId);
     }
 }
